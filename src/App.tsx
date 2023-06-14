@@ -5,6 +5,7 @@ import { NewNote } from "./components/NewNote"
 import { useLocalStorage } from "./Hooks/useLocalStorage"
 import { useMemo } from "react"
 import {v4 as uuidv4} from 'uuid';
+import { NoteList } from "./components/NoteList"
 
 
 export type Note = {
@@ -39,6 +40,7 @@ const noteWithTags = useMemo(()=>{
     return { ...note,tags : tags.filter(tag=>note.tagIds.includes(tag.id))}
   })
 },[notes,tags])
+
  function onCreateNote(data: NoteData){
   setNotes(prevNotes => {
     return [...prevNotes,{...data,id: uuidv4(),tagIds: tags.map(tag => tag.id)},
@@ -46,14 +48,16 @@ const noteWithTags = useMemo(()=>{
 
   })
  }
+
  function addTag(tag : Tag){
   setTags(prev => [...prev , tag])
  }
+
   return (
     <Container className="my-4">
 
   <Routes>
-    <Route path="/" element ={<h1>Home</h1>} />
+    <Route path="/" element ={<NoteList  availableTags={tags}/>} />
     <Route path="/new" element ={<NewNote onSubmit = {onCreateNote} onAddTag = {addTag} availableTags={tags}/>} />
     <Route path="/:id"> 
     <Route index element={<h1>Show</h1>}></Route>

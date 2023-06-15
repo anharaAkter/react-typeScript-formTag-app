@@ -59,9 +59,9 @@ const noteWithTags = useMemo(()=>{
   <Routes>
     <Route path="/" element ={<NoteList  availableTags={tags} notes={noteWithTags}/>} />
     <Route path="/new" element ={<NewNote onSubmit = {onCreateNote} onAddTag = {addTag} availableTags={tags}/>} />
-    <Route path="/:id"> 
-    <Route index element={<h1>Show</h1>}></Route>
-    <Route path="edit" element={<h1>Edit</h1>}></Route>
+    <Route path="/:id" element={<NoteLayout notes={noteWithTags} />} > 
+    <Route index element={<Note/>} />
+    <Route path="edit" element={<h1>Edit</h1>} />
     </Route>
     
     <Route path="*" element ={<Navigate to="/" />} />
